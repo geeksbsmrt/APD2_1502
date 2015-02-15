@@ -3,6 +3,7 @@ package com.geeksbsmrt.puttputtpartner;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,8 +26,21 @@ public class Fragment_ManualCheckIn extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fragment__manual__check_in, container, false);
         MainActivity.actionBar.setTitle(R.string.app_name);
         setHasOptionsMenu(true);
-        MainActivity.actionBar.setHomeButtonEnabled(false);
-        MainActivity.actionBar.setDisplayHomeAsUpEnabled(false);
+        MainActivity.actionBar.setHomeButtonEnabled(true);
+        MainActivity.actionBar.setDisplayHomeAsUpEnabled(true);
         return rootView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                getFragmentManager().popBackStack();
+            }
+            default: {
+                return false;
+            }
+        }
     }
 }
