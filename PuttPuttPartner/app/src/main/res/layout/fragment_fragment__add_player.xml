@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:text="@string/addPlayer"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/AC_AddButton"/>
+        android:id="@+id/AP_AddButton"/>
 
 </LinearLayout>
