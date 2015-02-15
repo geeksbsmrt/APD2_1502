@@ -56,19 +56,6 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                getFragmentManager().popBackStack();
-            }
-            default: {
-                return false;
-            }
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.AC_CreateScorecard:{
@@ -91,6 +78,19 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
                 break;
             }
             default: break;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                getFragmentManager().popBackStack();
+            }
+            default: {
+                return false;
+            }
         }
     }
 }
