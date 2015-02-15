@@ -32,6 +32,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_fragment__add_course, container, false);
 
+        //TODO: FIX SPINNER
         Spinner stateSpinner = (Spinner) rootView.findViewById(R.id.UC_CourseState);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
