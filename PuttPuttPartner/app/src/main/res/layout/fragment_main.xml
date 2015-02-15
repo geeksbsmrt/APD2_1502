@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/findCourse"
         android:id="@+id/search"
-        android:layout_margin="20dp"/>
+        android:layout_margin="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"

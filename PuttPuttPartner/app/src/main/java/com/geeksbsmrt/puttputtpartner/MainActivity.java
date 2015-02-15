@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 
 
         if (savedInstanceState == null) {
-            Fragment_MainActivity fma = Fragment_MainActivity.newInstance("test", "test2");
+            Fragment_MainActivity fma = new Fragment_MainActivity();
             getFragmentManager().beginTransaction()
                     .add(R.id.container, fma)
                     .commit();
