@@ -37,6 +37,8 @@ public class Fragment_AddPlayer extends Fragment {
         ap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: Remove toast message and complete Parse DB integration.
+                //Static set text in toast message as it will not be present in final build.
                 Toast.makeText(getActivity(), "Add player functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
                 getFragmentManager().popBackStack();
             }

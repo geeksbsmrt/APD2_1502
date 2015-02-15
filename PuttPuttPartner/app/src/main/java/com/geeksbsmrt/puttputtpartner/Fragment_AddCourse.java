@@ -32,6 +32,11 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_fragment__add_course, container, false);
 
+        MainActivity.actionBar.setTitle(R.string.app_name);
+        setHasOptionsMenu(true);
+        MainActivity.actionBar.setHomeButtonEnabled(true);
+        MainActivity.actionBar.setDisplayHomeAsUpEnabled(true);
+
         //TODO: FIX SPINNER
         Spinner stateSpinner = (Spinner) rootView.findViewById(R.id.UC_CourseState);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
@@ -74,10 +79,14 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
                 break;
             }
             case R.id.AC_AddFavAndPlay:{
+                //TODO: Remove toast message and complete Parse DB integration.
+                //Static set text in toast message as it will not be present in final build.
                 Toast.makeText(getActivity(), "Favorite and play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
                 break;
             }
             case R.id.AC_PlayOnce:{
+                //TODO: Remove toast message and complete Parse DB integration.
+                //Static set text in toast message as it will not be present in final build.
                 Toast.makeText(getActivity(), "Play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
                 break;
             }
