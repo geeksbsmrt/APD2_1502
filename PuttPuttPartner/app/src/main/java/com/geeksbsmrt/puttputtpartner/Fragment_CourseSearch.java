@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class Fragment_CourseSearch extends Fragment {
@@ -26,10 +28,22 @@ public class Fragment_CourseSearch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_course_search, container, false);
+
         MainActivity.actionBar.setTitle(R.string.app_name);
         setHasOptionsMenu(true);
         MainActivity.actionBar.setHomeButtonEnabled(true);
         MainActivity.actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Button search = (Button) rootView.findViewById(R.id.CS_Search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Remove toast message and complete Parse DB integration.
+                //Static set text in toast message as it will not be present in final build.
+                Toast.makeText(getActivity(), "Search functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+            }
+        });
+
         return rootView;
     }
 
