@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/MCI_FavCourses"
+        android:layout_weight=".4"
+        android:clickable="false"
+        android:layout_marginBottom="15dp"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/MCI_NearCourses"
+        android:layout_weight=".4"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/unlistedCourse"
+        android:layout_margin="15dp"
+        android:id="@+id/MCI_Unlisted"/>
+
+</LinearLayout>

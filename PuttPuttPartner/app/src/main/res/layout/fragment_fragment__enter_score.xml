@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geeksbsmrt.puttputtpartner.Fragment_EnterScore">
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ES_HoleNumber"
+        android:layout_centerHorizontal="true"/>
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ES_PlayerName"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/ES_HoleNumber"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/par"
+        android:id="@+id/ES_Par"
+        android:layout_below="@id/ES_PlayerName"
+        android:layout_alignStart="@id/ES_PlayerName"
+        android:layout_alignLeft="@id/ES_PlayerName"
+        android:layout_margin="10dp"/>
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ES_Strokes"
+        android:hint="@string/strokes"
+        android:layout_below="@id/ES_Par"
+        android:layout_alignStart="@id/ES_PlayerName"
+        android:layout_alignLeft="@id/ES_PlayerName"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saveScore"
+        android:id="@+id/ES_SaveScore"
+        android:layout_below="@id/ES_Strokes"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

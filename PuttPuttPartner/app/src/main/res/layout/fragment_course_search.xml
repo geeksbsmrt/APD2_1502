@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geeksbsmrt.puttputtpartner.Fragment_CourseSearch"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onlyDB"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/searchQuery"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/CS_Search"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/CS_CourseList"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"/>
+
+</LinearLayout>
