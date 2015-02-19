@@ -18,7 +18,31 @@ android {
         }
     }
 }
+apply plugin: 'com.parse'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://maven.parse.com/repo'
+        }
+    }
+    dependencies {
+        classpath 'com.parse.tools:gradle:1.+'
+    }
+}
+
+parse {
+    applicationId "i9UwQFg5VcMPk2AG3pH2uUUxBlRu9nU15hGta31i"
+    masterKey "tsMR10Bfqkc6MQ2HJirspgcI7pdUD2UcNAbYgxqd"
+    // This makes it automatic. Otherwise you would have to run e.g. gradlew parseUploadSymbolsRelease.
+    uploadSymbols true
+}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: 'ParseCrashReporting-*.jar', dir: 'libs')
+    compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+    compile project(':ParseLoginUI')
 }
