@@ -104,4 +104,7 @@
     <string name="parse_app_id">i9UwQFg5VcMPk2AG3pH2uUUxBlRu9nU15hGta31i</string>
     <string name="parse_client_key">aVhjMQvIGlNsZrG06QseXkuFSqIi7lJuGHWzTqKf</string>
 
+    <string name="twitterConsumerKey">92YABardRzPRkIq2xp4z4zeL5</string>
+    <string name="twitterConsumerSecret">mSp4kAk1Dl5DU8XN9BTgsxjntVrlaST1qVazeWckfjmnJnaIQ9</string>
+
 </resources>

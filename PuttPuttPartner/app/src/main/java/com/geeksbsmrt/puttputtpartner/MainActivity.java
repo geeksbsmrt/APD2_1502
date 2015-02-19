@@ -2,6 +2,7 @@ package com.geeksbsmrt.puttputtpartner;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,16 +16,18 @@ import com.parse.ui.ParseLoginBuilder;
 public class MainActivity extends Activity {
 
     public static ActionBar actionBar;
+    private Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        res = getResources();
 
         Parse.enableLocalDatastore(this);
         ParseCrashReporting.enable(this);
-        Parse.initialize(this, getResources().getString(R.string.parse_app_id), getResources().getString(R.string.parse_client_key));
-        ParseTwitterUtils.initialize("92YABardRzPRkIq2xp4z4zeL5", "mSp4kAk1Dl5DU8XN9BTgsxjntVrlaST1qVazeWckfjmnJnaIQ9");
+        Parse.initialize(this, res.getString(R.string.parse_app_id), res.getString(R.string.parse_client_key));
+        ParseTwitterUtils.initialize(res.getString(R.string.twitterConsumerKey), res.getString(R.string.twitterConsumerSecret));
 
         ParseLoginBuilder builder = new ParseLoginBuilder(this);
         startActivityForResult(builder.build(), 0);
