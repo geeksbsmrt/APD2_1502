@@ -2,14 +2,20 @@ package com.geeksbsmrt.puttputtpartner;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseException;
 import com.parse.ParseTwitterUtils;
+import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
 
@@ -22,6 +28,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        actionBar = getActionBar();
+        setContentView(R.layout.activity_main);
+
         res = getResources();
 
         Parse.enableLocalDatastore(this);
@@ -29,21 +38,37 @@ public class MainActivity extends Activity {
         Parse.initialize(this, res.getString(R.string.parse_app_id), res.getString(R.string.parse_client_key));
         ParseTwitterUtils.initialize(res.getString(R.string.twitterConsumerKey), res.getString(R.string.twitterConsumerSecret));
 
-        ParseLoginBuilder builder = new ParseLoginBuilder(this);
-        startActivityForResult(builder.build(), 0);
 
-        actionBar = getActionBar();
-        setContentView(R.layout.activity_main);
-
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            ParseLoginBuilder builder = new ParseLoginBuilder(this);
+            startActivityForResult(builder.build(), 0);
+        }
 
         if (savedInstanceState == null) {
             Fragment_MainActivity fma = new Fragment_MainActivity();
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, fma)
-                    .commit();
+                .add(R.id.container, fma)
+                .commit();
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 86 || resultCode == RESULT_CANCELED) {
+            ParseAnonymousUtils.logIn(new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        Log.d("PuttPutt Partner", "Anonymous login failed.");
+                    } else {
+                        Log.d("PuttPutt Partner", "Anonymous user logged in.");
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,7 +90,5 @@ public class MainActivity extends Activity {
                 return false;
             }
         }
-
-
     }
 }
