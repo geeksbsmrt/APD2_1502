@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
         ParseCrashReporting.enable(this);
         ParseObject.registerSubclass(CourseItem.class);
         ParseObject.registerSubclass(HoleItem.class);
+        ParseObject.registerSubclass(GameItem.class);
         Parse.initialize(this, res.getString(R.string.parse_app_id), res.getString(R.string.parse_client_key));
         ParseTwitterUtils.initialize(res.getString(R.string.twitterConsumerKey), res.getString(R.string.twitterConsumerSecret));
 

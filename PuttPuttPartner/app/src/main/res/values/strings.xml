@@ -48,6 +48,7 @@
     <string name="noFavs">You have not added any favorite courses.  They will be displayed here once added.</string>
     <string name="allFields">All fields are required.  Please complete the form above.</string>
     <string name="courseNotSaved">Course could not be saved.  Please check network connection and try again.</string>
+    <string name="noGameFound">No game found with GameID: </string>
 
     <string-array name="states">
         <item>State</item>

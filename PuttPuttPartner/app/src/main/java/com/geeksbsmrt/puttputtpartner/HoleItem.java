@@ -11,4 +11,5 @@ import java.io.Serializable;
 
 @ParseClassName("Hole")
 public class HoleItem extends ParseObject implements Serializable {
+
 }
