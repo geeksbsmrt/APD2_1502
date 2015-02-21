@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-
 
 public class Fragment_CourseDesc extends Fragment implements View.OnClickListener {
 
