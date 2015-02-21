@@ -26,6 +26,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public static String COURSECITY = "City";
     public static String COURSESTATE = "State";
     public static String COURSEZIP = "Zip";
+    public static String COURSEPAR = "TotalPar";
 
     public String getCourseName() {
         return getString(COURSENAME);
@@ -76,16 +77,15 @@ public class CourseItem extends ParseObject implements Serializable {
         put(COURSEHOLES, holes);
     }
 
-    public static ParseQuery<CourseItem> getQuery(){
+    public  String getCoursePar() {
+        return getString(COURSEPAR);
+    }
+    public void setCoursePar(String coursePar) {
+        put(COURSEPAR, coursePar);
+    }
 
+    public static ParseQuery<CourseItem> getQuery(){
         Log.i("CI", "getting query");
-        ParseQuery<CourseItem> query = ParseQuery.getQuery(CourseItem.class);
-        try {
-            Log.i("CI", String.valueOf(query.count()));
-            return query;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return ParseQuery.getQuery(CourseItem.class);
     }
 }

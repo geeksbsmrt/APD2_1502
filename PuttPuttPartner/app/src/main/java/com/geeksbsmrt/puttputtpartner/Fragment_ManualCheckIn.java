@@ -46,7 +46,6 @@ public class Fragment_ManualCheckIn extends Fragment {
         ListView nearList = (ListView) rootView.findViewById(R.id.MCI_NearCourses);
 
 
-
         return rootView;
     }
 

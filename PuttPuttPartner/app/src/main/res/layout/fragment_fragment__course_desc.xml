@@ -16,12 +16,7 @@
         android:text="@string/city"
         android:id="@+id/CD_City"
         android:layout_marginBottom="5dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/state"
-        android:id="@+id/CD_State"
-        android:layout_marginBottom="5dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,27 +30,20 @@
         android:id="@+id/CD_Par"
         android:layout_marginBottom="5dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:id="@+id/CD_PlayButtons"
-        android:orientation="vertical"
-        android:layout_marginTop="25dp">
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/addFavAndPlay"
-            android:id="@+id/CD_AddFavAndPlay"
-            android:layout_marginBottom="15dp"
-            />
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/play"
-            android:id="@+id/CD_Play"
-            />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:text="@string/addFavAndPlay"
+        android:id="@+id/CD_AddFavAndPlay"
+        android:layout_marginBottom="15dp"
+        />
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/play"
+        android:id="@+id/CD_Play"
+        />
 
 </LinearLayout>

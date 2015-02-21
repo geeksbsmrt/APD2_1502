@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,7 +22,7 @@ import com.parse.ParseQueryAdapter;
 import java.util.regex.Pattern;
 
 
-public class Fragment_CourseSearch extends Fragment {
+public class Fragment_CourseSearch extends Fragment implements AdapterView.OnItemClickListener {
 
     ParseQueryAdapter<CourseItem> courseAdapter;
     ListView courseList;
@@ -42,13 +43,14 @@ public class Fragment_CourseSearch extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_course_search, container, false);
 
-        MainActivity.actionBar.setTitle(R.string.app_name);
+        MainActivity.actionBar.setTitle(R.string.courseSearch);
         setHasOptionsMenu(true);
         MainActivity.actionBar.setHomeButtonEnabled(true);
         MainActivity.actionBar.setDisplayHomeAsUpEnabled(true);
 
         final EditText input = (EditText) rootView.findViewById(R.id.CS_query);
         courseList = (ListView) rootView.findViewById(R.id.CS_CourseList);
+        courseList.setOnItemClickListener(this);
 
         Button search = (Button) rootView.findViewById(R.id.CS_Search);
         search.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,7 @@ public class Fragment_CourseSearch extends Fragment {
             String query = input.getText().toString();
                 if (!query.equals("")){
                     Log.i("CS", query);
+
                     String zipRegex = "\\d{5}";
                     String cityStateRegex = ".*[,]? [A-Z][A-Za-z]";
                     if (Pattern.matches(zipRegex, query)){
@@ -73,7 +76,8 @@ public class Fragment_CourseSearch extends Fragment {
                     } else {
                         Toast.makeText(getActivity(), getResources().getString(R.string.searchQuery), Toast.LENGTH_LONG).show();
                     }
-                    hideKeyboard();
+                    InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 } else {
                     Toast.makeText(getActivity(), getResources().getString(R.string.noInput), Toast.LENGTH_LONG).show();
                 }
@@ -144,15 +148,6 @@ public class Fragment_CourseSearch extends Fragment {
         courseList.setVisibility(View.VISIBLE);
     }
 
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm.isAcceptingText()) {
-            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -164,5 +159,15 @@ public class Fragment_CourseSearch extends Fragment {
                 return false;
             }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CourseItem course = courseAdapter.getItem(i);
+        Fragment_CourseDesc cd = new Fragment_CourseDesc();
+        Bundle courseBundle = new Bundle();
+        courseBundle.putSerializable("course", course);
+        cd.setArguments(courseBundle);
+        getFragmentManager().beginTransaction().replace(R.id.container, cd).addToBackStack(null).commit();
     }
 }

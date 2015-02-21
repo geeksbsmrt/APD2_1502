@@ -8,22 +8,17 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/OPT_FB"
-        android:text="@string/linkFB"/>
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/OPT_Twitter"
-        android:text="@string/linkTwitter"/>
+        android:layout_marginTop="60dp"
+        android:id="@+id/OPT_ACT"
+        android:text="@string/SignUp"
+        android:visibility="gone"/>
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
-        android:id="@+id/OPT_ACT"
-        android:text="@string/SignUp"/>
+        android:id="@+id/OPT_LOGOUT"
+        android:text="@string/logout"
+        android:visibility="gone"/>
 
 </LinearLayout>

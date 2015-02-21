@@ -43,6 +43,7 @@
     <string name="logout">Logout</string>
     <string name="noInput">Enter either: City ST or 5 digit US Zip</string>
     <string name="noResults">No results returned for:</string>
+    <string name="courseSearch">Course Search</string>
 
     <string-array name="states">
         <item name="Alabama"/>

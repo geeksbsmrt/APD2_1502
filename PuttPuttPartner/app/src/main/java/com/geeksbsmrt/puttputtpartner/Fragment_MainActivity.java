@@ -26,13 +26,10 @@ public class Fragment_MainActivity extends Fragment implements View.OnClickListe
 
         Button findCourse = (Button) rootView.findViewById(R.id.search);
         findCourse.setOnClickListener(this);
-
         Button aci = (Button) rootView.findViewById(R.id.autoCheckIn);
         aci.setOnClickListener(this);
-
         Button mci = (Button) rootView.findViewById(R.id.manualCheckIn);
         mci.setOnClickListener(this);
-
         Button join = (Button) rootView.findViewById(R.id.joinGame);
         join.setOnClickListener(this);
 

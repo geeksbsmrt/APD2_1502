@@ -2,12 +2,19 @@ package com.geeksbsmrt.puttputtpartner;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseAnonymousUtils;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.ui.ParseLoginBuilder;
 
 
 public class Fragment_Options extends Fragment implements View.OnClickListener{
@@ -32,12 +39,16 @@ public class Fragment_Options extends Fragment implements View.OnClickListener{
         MainActivity.actionBar.setHomeButtonEnabled(true);
         MainActivity.actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Button facebook = (Button) rootView.findViewById(R.id.OPT_FB);
-        facebook.setOnClickListener(this);
-        Button twitter = (Button) rootView.findViewById(R.id.OPT_Twitter);
-        twitter.setOnClickListener(this);
         Button act = (Button) rootView.findViewById(R.id.OPT_ACT);
         act.setOnClickListener(this);
+        Button logOut = (Button) rootView.findViewById(R.id.OPT_LOGOUT);
+        logOut.setOnClickListener(this);
+
+        if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+            act.setVisibility(View.VISIBLE);
+        } else {
+            logOut.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }
@@ -46,21 +57,25 @@ public class Fragment_Options extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.OPT_ACT:{
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Account functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+                ParseLoginBuilder builder = new ParseLoginBuilder(getActivity());
+                startActivityForResult(builder.build(), 0);
+                getFragmentManager().popBackStack();
                 break;
             }
-            case R.id.OPT_FB:{
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Facebook functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
-                break;
-            }
-            case R.id.OPT_Twitter:{
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Twitter functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+            case R.id.OPT_LOGOUT:{
+                Log.i("OPT", "Logging out");
+                ParseUser.logOut();
+                ParseAnonymousUtils.logIn(new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e != null) {
+                            Log.d("MyApp", "Anonymous login failed.");
+                        } else {
+                            Log.d("MyApp", "Anonymous user logged in.");
+                        }
+                    }
+                });
+                getFragmentManager().popBackStack();
                 break;
             }
             default:break;
