@@ -15,7 +15,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/searchQuery"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"/>
+        android:inputType="textCapWords"
+        android:layout_margin="5dp"
+        android:id="@+id/CS_query"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

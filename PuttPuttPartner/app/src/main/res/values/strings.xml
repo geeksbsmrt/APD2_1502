@@ -9,7 +9,7 @@
     <string name="manualCheckIn">Manual Check-In</string>
     <string name="joinGame">Join Game</string>
     <string name="onlyDB">Only courses in our database will be shown.</string>
-    <string name="searchQuery">Enter City &amp; State OR Zip Code</string>
+    <string name="searchQuery">Example: Lakeland FL OR 33813</string>
     <string name="search">Search</string>
     <string name="NFC">Scan Check-in tag with NFC</string>
     <string name="or">Or</string>
@@ -41,6 +41,8 @@
     <string name="linkTwitter">Link Twitter</string>
     <string name="SignUp">Sign Up</string>
     <string name="logout">Logout</string>
+    <string name="noInput">Enter either: City ST or 5 digit US Zip</string>
+    <string name="noResults">No results returned for:</string>
 
     <string-array name="states">
         <item name="Alabama"/>

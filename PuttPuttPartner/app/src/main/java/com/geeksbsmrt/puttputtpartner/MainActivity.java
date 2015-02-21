@@ -14,6 +14,7 @@ import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
@@ -33,8 +34,9 @@ public class MainActivity extends Activity {
 
         res = getResources();
 
-        Parse.enableLocalDatastore(this);
         ParseCrashReporting.enable(this);
+        ParseObject.registerSubclass(CourseItem.class);
+        ParseObject.registerSubclass(HoleItem.class);
         Parse.initialize(this, res.getString(R.string.parse_app_id), res.getString(R.string.parse_client_key));
         ParseTwitterUtils.initialize(res.getString(R.string.twitterConsumerKey), res.getString(R.string.twitterConsumerSecret));
 
