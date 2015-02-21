@@ -10,25 +10,37 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/UC_CourseName"
         android:hint="@string/courseName"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:inputType="textCapWords"/>
     <EditText
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/UC_CourseAddress"
+        android:inputType="textCapWords"
         android:hint="@string/courseAddress"/>
     <EditText
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/UC_CourseCity"
+        android:inputType="textCapWords"
         android:hint="@string/city"/>
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/UC_CourseZip"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/zip"
+        android:inputType="number"
+        />
     <Spinner
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/UC_CourseState"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        />
 
     <Button
         android:layout_width="250dp"

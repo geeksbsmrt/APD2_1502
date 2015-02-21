@@ -13,6 +13,7 @@
     <string name="search">Search</string>
     <string name="NFC">Scan Check-in tag with NFC</string>
     <string name="or">Or</string>
+    <string name="zip">Zip</string>
     <string name="barcode">Check-in with Barcode</string>
     <string name="favCourses">Favorite Courses</string>
     <string name="nearCourses">Nearby Courses</string>
@@ -45,58 +46,61 @@
     <string name="noResults">No results returned for:</string>
     <string name="courseSearch">Course Search</string>
     <string name="noFavs">You have not added any favorite courses.  They will be displayed here once added.</string>
+    <string name="allFields">All fields are required.  Please complete the form above.</string>
+    <string name="courseNotSaved">Course could not be saved.  Please check network connection and try again.</string>
 
     <string-array name="states">
-        <item name="Alabama"/>
-        <item name="Alaska"/>
-        <item name="Arizona"/>
-        <item name="Arkansas"/>
-        <item name="California"/>
-        <item name="Colorado"/>
-        <item name="Connecticut"/>
-        <item name="Delaware"/>
-        <item name="Florida"/>
-        <item name="Georgia"/>
-        <item name="Hawaii"/>
-        <item name="Idaho"/>
-        <item name="Illinois"/>
-        <item name="Indiana"/>
-        <item name="Iowa"/>
-        <item name="Kansas"/>
-        <item name="Kentucky"/>
-        <item name="Louisiana"/>
-        <item name="Maine"/>
-        <item name="Maryland"/>
-        <item name="Massachusetts"/>
-        <item name="Michigan"/>
-        <item name="Minnesota"/>
-        <item name="Mississippi"/>
-        <item name="Missouri"/>
-        <item name="Montana"/>
-        <item name="Nebraska"/>
-        <item name="Nevada"/>
-        <item name="New Hampshire"/>
-        <item name="New Jersey"/>
-        <item name="New Mexico"/>
-        <item name="New York"/>
-        <item name="North Carolina"/>
-        <item name="North Dakota"/>
-        <item name="Ohio"/>
-        <item name="Oklahoma"/>
-        <item name="Oregon"/>
-        <item name="Pennsylvania"/>
-        <item name="Rhode Island"/>
-        <item name="South Carolina"/>
-        <item name="South Dakota"/>
-        <item name="Tennessee"/>
-        <item name="Texas"/>
-        <item name="Utah"/>
-        <item name="Vermont"/>
-        <item name="Virginia"/>
-        <item name="Washington"/>
-        <item name="West Virginia"/>
-        <item name="Wisconsin"/>
-        <item name="Wyoming"/>
+        <item>State</item>
+        <item>AL</item>
+        <item>AK</item>
+        <item>AZ</item>
+        <item>AR</item>
+        <item>CA</item>
+        <item>CO</item>
+        <item>CT</item>
+        <item>DE</item>
+        <item>FL</item>
+        <item>GA</item>
+        <item>HI</item>
+        <item>ID</item>
+        <item>IL</item>
+        <item>IN</item>
+        <item>IA</item>
+        <item>KS</item>
+        <item>KY</item>
+        <item>LA</item>
+        <item>ME</item>
+        <item>MD</item>
+        <item>MA</item>
+        <item>MI</item>
+        <item>MN</item>
+        <item>MS</item>
+        <item>MO</item>
+        <item>MT</item>
+        <item>NE</item>
+        <item>NV</item>
+        <item>NH</item>
+        <item>NJ</item>
+        <item>NM</item>
+        <item>NY</item>
+        <item>NC</item>
+        <item>ND</item>
+        <item>OH</item>
+        <item>OK</item>
+        <item>OR</item>
+        <item>PA</item>
+        <item>RI</item>
+        <item>SC</item>
+        <item>SD</item>
+        <item>TN</item>
+        <item>TX</item>
+        <item>UT</item>
+        <item>VT</item>
+        <item>VA</item>
+        <item>WA</item>
+        <item>WV</item>
+        <item>WI</item>
+        <item>WY</item>
     </string-array>
 
     <string name="facebook_app_id">404214489740699</string>
