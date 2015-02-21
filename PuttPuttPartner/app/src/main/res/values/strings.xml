@@ -44,6 +44,7 @@
     <string name="noInput">Enter either: City ST or 5 digit US Zip</string>
     <string name="noResults">No results returned for:</string>
     <string name="courseSearch">Course Search</string>
+    <string name="noFavs">You have not added any favorite courses.  They will be displayed here once added.</string>
 
     <string-array name="states">
         <item name="Alabama"/>
