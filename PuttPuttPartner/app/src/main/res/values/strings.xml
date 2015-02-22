@@ -49,6 +49,8 @@
     <string name="allFields">All fields are required.  Please complete the form above.</string>
     <string name="courseNotSaved">Course could not be saved.  Please check network connection and try again.</string>
     <string name="noGameFound">No game found with GameID: </string>
+    <string name="noNFC">No NFC device found. NFC functionality not possible.</string>
+    <string name="nfcDisabled">Please enable NFC then press back.</string>
 
     <string-array name="states">
         <item>State</item>

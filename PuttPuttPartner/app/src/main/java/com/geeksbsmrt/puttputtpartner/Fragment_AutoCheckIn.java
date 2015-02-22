@@ -1,6 +1,8 @@
 package com.geeksbsmrt.puttputtpartner;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,6 +12,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Fragment_AutoCheckIn extends Fragment {
+
+    private NfcAdapter nfcAdapter;
+
     public Fragment_AutoCheckIn() {
         // Required empty public constructor
     }
@@ -17,6 +22,15 @@ public class Fragment_AutoCheckIn extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
+        if (nfcAdapter == null){
+            Toast.makeText(getActivity(), getString(R.string.noNFC), Toast.LENGTH_LONG).show();
+        }
+
+        if (!nfcAdapter.isEnabled()){
+            Toast.makeText(getActivity(), getString(R.string.nfcDisabled), Toast.LENGTH_LONG).show();
+            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+        }
     }
 
     @Override
