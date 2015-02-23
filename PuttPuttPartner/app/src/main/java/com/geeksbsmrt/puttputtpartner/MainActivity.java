@@ -152,7 +152,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private CourseItem getCourse(String courseID) {
+    public static CourseItem getCourse(String courseID) {
         ParseQuery<CourseItem> query = CourseItem.getQuery();
         query.whereEqualTo("objectId", courseID);
         CourseItem course = null;

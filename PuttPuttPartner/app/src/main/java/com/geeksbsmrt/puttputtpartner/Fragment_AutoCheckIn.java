@@ -4,12 +4,16 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class Fragment_AutoCheckIn extends Fragment {
 
@@ -49,13 +53,35 @@ public class Fragment_AutoCheckIn extends Fragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Barcode functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+
+                IntentIntegrator integrator = new IntentIntegrator(Fragment_AutoCheckIn.this);
+                integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("ACI", "in results");
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null){
+            String contents = result.getContents();
+            if (contents != null){
+                Log.i("ACI", contents);
+                CourseItem course = MainActivity.getCourse(contents);
+                Fragment_CourseDesc cd = new Fragment_CourseDesc();
+                Bundle courseBundle = new Bundle();
+                courseBundle.putSerializable("course", course);
+                cd.setArguments(courseBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, cd).addToBackStack(null).commit();
+            } else {
+                Log.i("ACI", "Contents null");
+            }
+        }else {
+            Log.i("ACI", "results null");
+        }
     }
 
     @Override
