@@ -53,7 +53,6 @@ public class Fragment_AutoCheckIn extends Fragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 IntentIntegrator integrator = new IntentIntegrator(Fragment_AutoCheckIn.this);
                 integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
             }
@@ -71,15 +70,19 @@ public class Fragment_AutoCheckIn extends Fragment {
             if (contents != null){
                 Log.i("ACI", contents);
                 CourseItem course = MainActivity.getCourse(contents);
-                Fragment_CourseDesc cd = new Fragment_CourseDesc();
-                Bundle courseBundle = new Bundle();
-                courseBundle.putSerializable("course", course);
-                cd.setArguments(courseBundle);
-                getFragmentManager().beginTransaction().replace(R.id.container, cd).addToBackStack(null).commit();
+                if (!(course == null)) {
+                    Fragment_CourseDesc cd = new Fragment_CourseDesc();
+                    Bundle courseBundle = new Bundle();
+                    courseBundle.putSerializable("course", course);
+                    cd.setArguments(courseBundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container, cd).addToBackStack(null).commit();
+                } else {
+                    Log.i("ACI", "course null");
+                }
             } else {
                 Log.i("ACI", "Contents null");
             }
-        }else {
+        } else {
             Log.i("ACI", "results null");
         }
     }

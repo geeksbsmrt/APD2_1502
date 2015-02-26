@@ -51,6 +51,9 @@
     <string name="noGameFound">No game found with GameID: </string>
     <string name="noNFC">No NFC device found. NFC functionality not possible.</string>
     <string name="nfcDisabled">Please enable NFC then press back.</string>
+    <string name="player">Player</string>
+    <string name="total">Total</string>
+    <string name="hole">Hole:</string>
 
     <string-array name="states">
         <item>State</item>
@@ -117,5 +120,8 @@
 
     <string name="twitterConsumerKey">92YABardRzPRkIq2xp4z4zeL5</string>
     <string name="twitterConsumerSecret">mSp4kAk1Dl5DU8XN9BTgsxjntVrlaST1qVazeWckfjmnJnaIQ9</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

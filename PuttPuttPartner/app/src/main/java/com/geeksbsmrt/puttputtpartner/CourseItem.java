@@ -11,6 +11,9 @@ import com.parse.ParseQuery;
 import org.json.JSONArray;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Adam on 2/20/2015.
@@ -69,8 +72,8 @@ public class CourseItem extends ParseObject implements Serializable {
         put(COURSELOCATION, location);
     }
 
-    public JSONArray getCourseHoles() {
-        return getJSONArray(COURSEHOLES);
+    public List getCourseHoles() {
+        return getList(COURSEHOLES);
     }
     public void setCourseHoles(JSONArray holes) {
         put(COURSEHOLES, holes);
@@ -83,7 +86,7 @@ public class CourseItem extends ParseObject implements Serializable {
         put(COURSEPAR, coursePar);
     }
 
-    public static ParseQuery<CourseItem> getQuery(){
+    public static ParseQuery<CourseItem> getQuery() throws ParseException{
         Log.i("CI", "getting query");
         return ParseQuery.getQuery(CourseItem.class);
     }

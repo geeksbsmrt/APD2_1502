@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         fragMgr = getFragmentManager();
 
         if (!ParseCrashReporting.isCrashReportingEnabled()) {
-            ParseCrashReporting.enable(this);
+            //ParseCrashReporting.enable(this);
         }
         ParseObject.registerSubclass(CourseItem.class);
         ParseObject.registerSubclass(HoleItem.class);
@@ -153,12 +153,16 @@ public class MainActivity extends Activity {
     }
 
     public static CourseItem getCourse(String courseID) {
-        ParseQuery<CourseItem> query = CourseItem.getQuery();
-        query.whereEqualTo("objectId", courseID);
+        ParseQuery<CourseItem> query;
         CourseItem course = null;
         try {
+            query = CourseItem.getQuery();
+            query.whereEqualTo("objectId", courseID);
+
             course = query.getFirst();
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
         return course;

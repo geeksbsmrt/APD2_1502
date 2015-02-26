@@ -73,9 +73,10 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
             @Override
             public ParseQuery<CourseItem> create() {
                 Log.i("MCI", "in query favs");
-                ParseQuery<CourseItem> query = CourseItem.getQuery();
-                query.whereContainedIn("objectId", user.getList("Favorites"));
+                ParseQuery<CourseItem> query = null;
                 try {
+                    query = CourseItem.getQuery();
+                    query.whereContainedIn("objectId", user.getList("Favorites"));
                     Log.i("MCI", String.valueOf(query.count()));
                     if (query.count() > 0){
                         favList.setVisibility(View.VISIBLE);
@@ -83,6 +84,8 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
                         noFavs.setVisibility(View.VISIBLE);
                     }
                 } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
                 return query;

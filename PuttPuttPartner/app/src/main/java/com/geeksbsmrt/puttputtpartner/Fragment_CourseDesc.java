@@ -55,7 +55,7 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
 
         address.setText(course.getCourseAddress());
         city.setText(course.getCourseCity() + ", " + course.getCourseState());
-        holes.setText(String.valueOf(course.getCourseHoles().length()) + " " + getResources().getString(R.string.holes));
+        holes.setText(String.valueOf(course.getCourseHoles().size()) + " " + getResources().getString(R.string.holes));
         totalPar.setText(getResources().getString(R.string.totalPar) + " " + course.getCoursePar());
 
         return rootView;
@@ -68,15 +68,21 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
                 ParseUser user = ParseUser.getCurrentUser();
                 user.addUnique("Favorites", course.getObjectId());
                 user.saveInBackground();
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Favorite saved. Play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+
+                Fragment_PlayGame pg = new Fragment_PlayGame();
+                Bundle courseBundle = new Bundle();
+                courseBundle.putSerializable("course", course);
+                pg.setArguments(courseBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             case R.id.CD_Play:{
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+
+                Fragment_PlayGame pg = new Fragment_PlayGame();
+                Bundle courseBundle = new Bundle();
+                courseBundle.putSerializable("course", course);
+                pg.setArguments(courseBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             default:break;

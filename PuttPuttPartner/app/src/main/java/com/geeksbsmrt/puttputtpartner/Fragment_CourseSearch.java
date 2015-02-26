@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.text.ParseException;
 import java.util.regex.Pattern;
 
 
@@ -94,8 +95,13 @@ public class Fragment_CourseSearch extends Fragment implements AdapterView.OnIte
             @Override
             public ParseQuery<CourseItem> create() {
                 Log.i("CS", "in Create");
-                ParseQuery<CourseItem> query = CourseItem.getQuery();
-                query.whereMatches(CourseItem.COURSEZIP, zip);
+                ParseQuery<CourseItem> query = null;
+                try {
+                    query = CourseItem.getQuery();
+                    query.whereMatches(CourseItem.COURSEZIP, zip);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return query;
             }
         };
@@ -124,9 +130,15 @@ public class Fragment_CourseSearch extends Fragment implements AdapterView.OnIte
             @Override
             public ParseQuery<CourseItem> create() {
                 Log.i("CS", "in Create");
-                ParseQuery<CourseItem> query = CourseItem.getQuery();
-                query.whereContains(CourseItem.COURSECITY, city);
-                query.whereContains(CourseItem.COURSESTATE, state);
+                ParseQuery<CourseItem> query = null;
+                try {
+                    query = CourseItem.getQuery();
+                    query.whereContains(CourseItem.COURSECITY, city);
+                    query.whereContains(CourseItem.COURSESTATE, state);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 return query;
             }
         };
