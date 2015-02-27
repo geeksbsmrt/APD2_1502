@@ -8,11 +8,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.json.JSONArray;
-
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,10 +69,10 @@ public class CourseItem extends ParseObject implements Serializable {
         put(COURSELOCATION, location);
     }
 
-    public List getCourseHoles() {
+    public List<String> getCourseHoles() {
         return getList(COURSEHOLES);
     }
-    public void setCourseHoles(JSONArray holes) {
+    public void setCourseHoles(List holes) {
         put(COURSEHOLES, holes);
     }
 

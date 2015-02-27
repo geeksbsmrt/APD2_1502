@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:baselineAligned="false">
+    <TableLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle|end"
+        >
+        <TableRow
+            >
+            <TextView
+                android:text="@string/playerName"
+                android:id="@+id/IPR_playerName"
+                android:layout_margin="5dp"
+                />
+        </TableRow>
+    </TableLayout>
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle|end"
+            >
+            <TableRow
+                android:divider="?android:dividerVertical"
+                android:showDividers="beginning|middle|end"
+                android:background="#003300"
+                android:id="@+id/IPR_scoreRow">
+                <TextView
+
+                    android:layout_margin="5dp"/>
+            </TableRow>
+        </TableLayout>
+    </HorizontalScrollView>
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_weight=".14"
+        android:layout_height="wrap_content"
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="beginning|middle|end">
+        <TableRow
+            android:divider="?android:dividerVertical"
+            android:showDividers="middle|beginning"
+            >
+            <TextView
+                android:layout_margin="5dp"
+                android:gravity="end"
+                android:text="0"
+                android:id="@+id/IPR_playerScore"
+                />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

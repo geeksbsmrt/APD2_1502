@@ -54,6 +54,9 @@
     <string name="player">Player</string>
     <string name="total">Total</string>
     <string name="hole">Hole:</string>
+    <string name="gameId">Game ID:</string>
+    <string name="enterScore">Enter Score</string>
+    <string name="clearScore">Clear Scores</string>
 
     <string-array name="states">
         <item>State</item>

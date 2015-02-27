@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
@@ -70,23 +69,34 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
                 user.saveInBackground();
 
                 Fragment_PlayGame pg = new Fragment_PlayGame();
-                Bundle courseBundle = new Bundle();
-                courseBundle.putSerializable("course", course);
-                pg.setArguments(courseBundle);
+                Bundle gameBundle = new Bundle();
+                gameBundle.putSerializable("game", createGame());
+                gameBundle.putSerializable("course", course);
+                pg.setArguments(gameBundle);
                 getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             case R.id.CD_Play:{
-
                 Fragment_PlayGame pg = new Fragment_PlayGame();
-                Bundle courseBundle = new Bundle();
-                courseBundle.putSerializable("course", course);
-                pg.setArguments(courseBundle);
+                Bundle gameBundle = new Bundle();
+                gameBundle.putSerializable("game", createGame());
+                gameBundle.putSerializable("course", course);
+                pg.setArguments(gameBundle);
                 getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             default:break;
         }
+    }
+
+    private String createGame(){
+        GameItem game = new GameItem();
+        game.setGameId(game.generateGameID());
+        game.setCourse(course);
+        ParseUser player = ParseUser.getCurrentUser();
+        game.addPlayer(player.getObjectId());
+        game.saveInBackground();
+        return game.getGameId();
     }
 
     @Override

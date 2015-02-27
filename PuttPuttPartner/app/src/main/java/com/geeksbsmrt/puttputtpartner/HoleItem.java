@@ -8,7 +8,6 @@ import com.parse.ParseQuery;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.List;
 
 
 /**
