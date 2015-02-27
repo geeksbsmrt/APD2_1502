@@ -57,6 +57,8 @@
     <string name="gameId">Game ID:</string>
     <string name="enterScore">Enter Score</string>
     <string name="clearScore">Clear Scores</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="states">
         <item>State</item>

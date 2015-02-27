@@ -1,7 +1,9 @@
 package com.geeksbsmrt.puttputtpartner;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,11 +18,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +38,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener 
     String gameId;
     TextView totalPar;
     List<String> players;
-    List<HoleItem> holeItemList;
+    List<HoleItem> holeItemList = new ArrayList<HoleItem>();
     int densityDPI;
 
     public Fragment_PlayGame() {
@@ -86,38 +88,35 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener 
             ParseQuery<HoleItem> holeQuery = HoleItem.getQuery();
             holeQuery.whereContainedIn("objectId", holes);
             holeQuery.addAscendingOrder(HoleItem.HOLENUMBER);
-            holeQuery.findInBackground(new FindCallback<HoleItem>() {
-                @Override
-                public void done(List<HoleItem> holeItems, com.parse.ParseException e) {
+            List<HoleItem> holeItems = holeQuery.find();
 
-                    holeItemList = holeItems;
+            holeItemList = holeItems;
 
-                    int parTotal = 0;
-                    for (HoleItem hole : holeItems) {
-                        TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.setMargins(getPx(8), getPx(5), getPx(8), getPx(5));
+            int parTotal = 0;
+            for (HoleItem hole : holeItems) {
+                TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(getPx(8), getPx(5), getPx(8), getPx(5));
 
-                        TextView holeText = new TextView(mContext);
-                        holeText.setTextAppearance(mContext, android.R.style.TextAppearance_Medium);
-                        holeText.setLayoutParams(params);
-                        holeText.setMinWidth(getPx(20));
-                        holeText.setGravity(Gravity.CENTER);
-                        holeText.setText(hole.getHoleNumber());
-                        holeRow.addView(holeText);
+                TextView holeText = new TextView(mContext);
+                holeText.setTextAppearance(mContext, android.R.style.TextAppearance_Medium);
+                holeText.setLayoutParams(params);
+                holeText.setMinWidth(getPx(20));
+                holeText.setGravity(Gravity.CENTER);
+                holeText.setText(hole.getHoleNumber());
+                holeRow.addView(holeText);
 
-                        TextView parText = new TextView(mContext);
-                        parText.setTextAppearance(mContext, android.R.style.TextAppearance_Medium);
-                        parText.setLayoutParams(params);
-                        parText.setMinWidth(getPx(20));
-                        parText.setGravity(Gravity.CENTER);
-                        parText.setText(hole.getHolePar());
-                        parRow.addView(parText);
+                TextView parText = new TextView(mContext);
+                parText.setTextAppearance(mContext, android.R.style.TextAppearance_Medium);
+                parText.setLayoutParams(params);
+                parText.setMinWidth(getPx(20));
+                parText.setGravity(Gravity.CENTER);
+                parText.setText(hole.getHolePar());
+                parRow.addView(parText);
 
-                        parTotal += Integer.parseInt(hole.getHolePar());
-                        totalPar.setText(String.valueOf(parTotal));
-                    }
-                }
-            });
+                parTotal += Integer.parseInt(hole.getHolePar());
+                totalPar.setText(String.valueOf(parTotal));
+            }
+
             players = game.getPlayers();
             for (String player : players){
                 ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
@@ -146,16 +145,18 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener 
                 TableRow.LayoutParams psrView = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 psrView.setMargins(getPx(8), getPx(5), getPx(8), getPx(5));
                 playerScoreRow.setBackgroundColor(Color.parseColor("#003300"));
-                playerScoreRow.setDividerDrawable(getResources().getDrawable(R.drawable.custom_divider_vertical));
-                playerScoreRow.setShowDividers(TableRow.SHOW_DIVIDER_BEGINNING|TableRow.SHOW_DIVIDER_MIDDLE|TableRow.SHOW_DIVIDER_END);
+                playerScoreRow.setDividerDrawable(getResources().getDrawable(android.R.drawable.divider_horizontal_dark));
+                Log.i("PLayer Index", String.valueOf(players.indexOf(player)));
+                playerScoreRow.setId(players.indexOf(player));
+                playerScoreRow.setShowDividers(TableRow.SHOW_DIVIDER_BEGINNING | TableRow.SHOW_DIVIDER_MIDDLE | TableRow.SHOW_DIVIDER_END);
                 playerScoreRow.setLayoutParams(psrView);
 
-                for (HoleItem hole : holeItemList){
+                for (String hole : holes){
                     TextView playerScoreText = new TextView(mContext);
                     playerScoreText.setMinWidth(getPx(20));
                     playerScoreText.setLayoutParams(psrView);
                     playerScoreText.setGravity(Gravity.CENTER);
-                    playerScoreText.setText("0");
+                    playerScoreText.setId(Integer.parseInt(holeItemList.get(holes.indexOf(hole)).getHoleNumber()));
                     playerScoreText.setOnClickListener(this);
                     playerScoreRow.addView(playerScoreText);
                 }
@@ -190,6 +191,33 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        ParseUser user = null;
+        Log.i("PG", String.valueOf(view.getId()));
+        HoleItem hole = holeItemList.get(view.getId()-1);
+        Log.i("PG", hole.getObjectId());
+        String player = players.get(((View) view.getParent()).getId());
+        Log.i("PG", player);
+        ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+        userQuery.whereEqualTo("objectId", player);
+        try {
+            user = userQuery.getFirst();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
 
+        if (user != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+        }
     }
 }

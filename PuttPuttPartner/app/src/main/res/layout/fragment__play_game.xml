@@ -72,38 +72,6 @@
                         android:layout_margin="5dp"
                         />
                 </TableRow>
-                <!--<TableRow-->
-                    <!--android:divider="?android:dividerVertical"-->
-                    <!--android:showDividers="beginning|middle|end"-->
-                    <!--android:background="#003300">-->
-                    <!--<TextView-->
-                        <!--android:text="0"-->
-                        <!--android:layout_margin="5dp"/>-->
-                <!--</TableRow>-->
-                <!--<TableRow-->
-                    <!--android:divider="?android:dividerVertical"-->
-                    <!--android:showDividers="beginning|middle|end"-->
-                    <!--android:background="#003300">-->
-                    <!--<TextView-->
-                        <!--android:text="0"-->
-                        <!--android:layout_margin="5dp"/>-->
-                <!--</TableRow>-->
-                <!--<TableRow-->
-                    <!--android:divider="?android:dividerVertical"-->
-                    <!--android:showDividers="beginning|middle|end"-->
-                    <!--android:background="#003300">-->
-                    <!--<TextView-->
-                        <!--android:text="0"-->
-                        <!--android:layout_margin="5dp"/>-->
-                <!--</TableRow>-->
-                <!--<TableRow-->
-                    <!--android:divider="?android:dividerVertical"-->
-                    <!--android:showDividers="beginning|middle|end"-->
-                    <!--android:background="#003300">-->
-                    <!--<TextView-->
-                        <!--android:text="0"-->
-                        <!--android:layout_margin="5dp"/>-->
-                <!--</TableRow>-->
             </TableLayout>
         </HorizontalScrollView>
 
@@ -193,13 +161,6 @@
             android:layout_height="wrap_content"
             android:text="@string/addPlayer"
             android:id="@+id/PG_addPlayer"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/enterScore"
-            android:id="@+id/PG_enterScore"
-            />
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
