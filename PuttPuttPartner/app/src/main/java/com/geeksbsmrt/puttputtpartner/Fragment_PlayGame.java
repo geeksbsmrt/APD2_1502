@@ -1,10 +1,8 @@
 package com.geeksbsmrt.puttputtpartner;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -59,19 +57,16 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        course = (CourseItem) getArguments().get("course");
-        gameId = getArguments().getString("game");
-        mContext = getActivity().getApplicationContext();
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        densityDPI = (int)(metrics.density * 160f);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        course = (CourseItem) getArguments().get("course");
+        gameId = getArguments().getString("game");
+        mContext = getActivity().getApplicationContext();
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        densityDPI = (int)(metrics.density * 160f);
         rootView = inflater.inflate(R.layout.fragment_play_game, container, false);
 
 
@@ -266,7 +261,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                 if (players.size() < 4) {
                     Dialogs dialog = Dialogs.newInstance(Dialogs.DialogType.PLAYER);
                     Bundle args = new Bundle();
-                    args.putInt("viewId", view.getId());
+                    args.putInt(Dialogs.VIEW_ID, view.getId());
                     dialog.setArguments(args);
                     dialog.setTargetFragment(this, 0);
                     dialog.show(getFragmentManager(), "DF");
@@ -295,9 +290,9 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                 if (user != null) {
                     Dialogs dialog = Dialogs.newInstance(Dialogs.DialogType.SCORE);
                     Bundle args = new Bundle();
-                    args.putInt("viewId", view.getId());
+                    args.putInt(Dialogs.VIEW_ID, view.getId());
                     TextView textView = (TextView) scoreTable.findViewById(view.getId());
-                    args.putString("text",textView.getText().toString());
+                    args.putString(Dialogs.TEXT,textView.getText().toString());
                     dialog.setArguments(args);
                     dialog.setTargetFragment(this, 0);
                     dialog.show(getFragmentManager(), "DF");

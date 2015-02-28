@@ -61,6 +61,8 @@
     <string name="cancel">Cancel</string>
     <string name="guest">Guest</string>
     <string name="maxPlayers">We currently only support 4 players per game.</string>
+    <string name="save">Save</string>
+    <string name="allHoles">Please enter a par for all holes.</string>
 
     <string-array name="states">
         <item>State</item>
@@ -127,8 +129,5 @@
 
     <string name="twitterConsumerKey">92YABardRzPRkIq2xp4z4zeL5</string>
     <string name="twitterConsumerSecret">mSp4kAk1Dl5DU8XN9BTgsxjntVrlaST1qVazeWckfjmnJnaIQ9</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

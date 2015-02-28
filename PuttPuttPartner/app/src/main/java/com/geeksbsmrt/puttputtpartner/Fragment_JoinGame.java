@@ -19,8 +19,6 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.List;
-
 public class Fragment_JoinGame extends Fragment {
 
 

@@ -131,7 +131,6 @@ public class MainActivity extends Activity {
     }
 
     private void handleIntent(Intent intent) {
-        // TODO: handle Intent
         String action = intent.getAction();
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)){
             String type = intent.getType();

@@ -15,11 +15,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
+import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
-public class Fragment_AddCourse extends Fragment implements View.OnClickListener {
+import java.util.List;
+
+public class Fragment_AddCourse extends Fragment implements View.OnClickListener, Fragment_CreateScoreCard.CreateScoreCardCallback {
 
     private LinearLayout playButtons;
     CourseItem course;
@@ -28,6 +32,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
     EditText courseAddress;
     EditText courseCity;
     EditText courseZip;
+    EditText numHoles;
 
     public Fragment_AddCourse() {
         // Required empty public constructor
@@ -55,7 +60,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
         courseCity = (EditText) rootView.findViewById(R.id.UC_CourseCity);
         courseZip = (EditText) rootView.findViewById(R.id.UC_CourseZip);
         stateSpinner = (Spinner) rootView.findViewById(R.id.UC_CourseState);
-
+        numHoles = (EditText) rootView.findViewById(R.id.UC_NumberHoles);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,36 +99,38 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
                     course.setCourseCity(courseCity.getText().toString());
                     course.setCourseZip(courseZip.getText().toString());
                     course.setCourseState(stateSpinner.getSelectedItem().toString());
-                    //TODO: Move this functionality to the play buttons in M3
-                    try {
-                        course.save();
-                        playButtons.setVisibility(View.VISIBLE);
-                    } catch (ParseException e) {
-                        Toast.makeText(getActivity(), getString(R.string.courseNotSaved), Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
+
+                    if (!numHoles.getText().toString().equals("")) {
+                        Fragment_CreateScoreCard fcs = new Fragment_CreateScoreCard();
+                        Bundle args = new Bundle();
+                        args.putString(Fragment_CreateScoreCard.NUM_HOLES, numHoles.getText().toString());
+                        fcs.setArguments(args);
+                        getFragmentManager().beginTransaction().replace(R.id.container, fcs, "fcs").addToBackStack(null).commit();
                     }
-                    //TODO: Remove toast message and complete Parse DB integration.
-                    //Static set text in toast message as it will not be present in final build.
-                    Toast.makeText(getActivity(), "Scorecard functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
                 }
                 break;
             }
             case R.id.AC_AddFavAndPlay: {
 
                 Log.i("AC", course.getObjectId());
-
                 ParseUser user = ParseUser.getCurrentUser();
                 user.addUnique("Favorites", course.getObjectId());
                 user.saveInBackground();
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Favorite saved. Play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+                Fragment_PlayGame pg = new Fragment_PlayGame();
+                Bundle gameBundle = new Bundle();
+                gameBundle.putSerializable("game", createGame());
+                gameBundle.putSerializable("course", course);
+                pg.setArguments(gameBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             case R.id.AC_PlayOnce: {
-                //TODO: Remove toast message and complete Parse DB integration.
-                //Static set text in toast message as it will not be present in final build.
-                Toast.makeText(getActivity(), "Play functionality will be enabled in a future release.", Toast.LENGTH_LONG).show();
+                Fragment_PlayGame pg = new Fragment_PlayGame();
+                Bundle gameBundle = new Bundle();
+                gameBundle.putSerializable("game", createGame());
+                gameBundle.putSerializable("course", course);
+                pg.setArguments(gameBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
             default:
@@ -142,5 +149,27 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
                 return false;
             }
         }
+    }
+
+    @Override
+    public void onScorecardCreated(List<String> holes, String totalPar) {
+        course.setCourseHoles(holes);
+        course.setCoursePar(totalPar);
+        course.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                playButtons.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private String createGame(){
+        GameItem game = new GameItem();
+        game.setGameId(game.generateGameID());
+        game.setCourse(course);
+        ParseUser player = ParseUser.getCurrentUser();
+        game.addPlayer(player);
+        game.saveInBackground();
+        return game.getGameId();
     }
 }

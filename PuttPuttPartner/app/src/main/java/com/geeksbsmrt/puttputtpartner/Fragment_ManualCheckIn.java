@@ -82,6 +82,7 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
                     if (query.count() > 0){
                         favList.setVisibility(View.VISIBLE);
                     } else {
+                        query = null;
                         noFavs.setVisibility(View.VISIBLE);
                     }
                 } catch (ParseException e) {
@@ -106,7 +107,9 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
                 return view;
             }
         };
-        favList.setAdapter(courseAdapter);
+        if (courseAdapter.getCount() > 0){
+            favList.setAdapter(courseAdapter);
+        }
     }
 
     @Override

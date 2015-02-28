@@ -41,6 +41,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/UC_NumberHoles"
+        android:inputType="number"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:hint="@string/holes"/>
 
     <Button
         android:layout_width="250dp"

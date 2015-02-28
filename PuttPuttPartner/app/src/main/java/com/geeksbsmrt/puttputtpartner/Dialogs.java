@@ -17,9 +17,14 @@ import java.text.ParseException;
  * Created by Adam on 2/27/2015.
  */
 public class Dialogs extends DialogFragment {
+
+    public static final String VIEW_ID = "viewId";
+    public static final String TEXT = "text";
+
     public enum DialogType {
         SCORE,
-        PLAYER
+        PLAYER,
+        PAR
     }
     public static DialogType type;
 
@@ -32,8 +37,13 @@ public class Dialogs extends DialogFragment {
         void onDialogOK(String result, int viewId, Dialogs dialog) throws ParseException;
         void onDialogCancel(Dialogs dialog);
     }
+    public interface createDialogFinished{
+        void onDialogOK(String result, int viewId, Dialogs dialog);
+        void onDialogCancel(Dialogs dialog);
+    }
 
     onDialogFinished mListener;
+    createDialogFinished cListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -41,6 +51,7 @@ public class Dialogs extends DialogFragment {
 
         try {
             mListener = (onDialogFinished) getTargetFragment();
+            cListener = (createDialogFinished) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement onDialogFinished");
@@ -55,10 +66,10 @@ public class Dialogs extends DialogFragment {
         input = (EditText) view.findViewById(R.id.ED_input);
         switch (type){
             case SCORE:{
-                if (getArguments().getString("text").equals("")) {
+                if (getArguments().getString(TEXT).equals("")) {
                     input.setHint(getString(R.string.enterScore));
                 } else {
-                    input.setText(getArguments().getString("text"));
+                    input.setText(getArguments().getString(TEXT));
                 }
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 builder.setView(view).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -66,7 +77,7 @@ public class Dialogs extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!input.getText().toString().equals("")) {
                             try {
-                                mListener.onDialogOK(input.getText().toString(), getArguments().getInt("viewId"), Dialogs.this);
+                                mListener.onDialogOK(input.getText().toString(), getArguments().getInt(VIEW_ID), Dialogs.this);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -97,6 +108,27 @@ public class Dialogs extends DialogFragment {
                     }
                 });
                 break;
+            }
+            case PAR:{
+                if (getArguments().getString(TEXT).equals("")) {
+                    input.setHint(getString(R.string.par));
+                } else {
+                    input.setText(getArguments().getString(TEXT));
+                }
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                builder.setView(view).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (!input.getText().toString().equals("")) {
+                            cListener.onDialogOK(input.getText().toString(), getArguments().getInt(VIEW_ID), Dialogs.this);
+                        }
+                    }
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        cListener.onDialogCancel(Dialogs.this);
+                    }
+                });
             }
             default:break;
         }

@@ -72,7 +72,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public List<String> getCourseHoles() {
         return getList(COURSEHOLES);
     }
-    public void setCourseHoles(List holes) {
+    public void setCourseHoles(List<String> holes) {
         put(COURSEHOLES, holes);
     }
 
