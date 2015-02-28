@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/totalPar"
         android:id="@+id/CD_Par"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="50dp"/>
 
     <Button
         android:layout_width="250dp"

@@ -1,4 +1,4 @@
-package com.geeksbsmrt.puttputtpartner;
+package com.geeksbsmrt.puttputtpartner.parse_items;
 
 import android.util.Log;
 
@@ -21,14 +21,14 @@ public class HoleItem extends ParseObject implements Serializable {
     public static String HOLEPAR = "Par";
 
     public String getHoleNumber() {
-        return getNumber(HOLENUMBER).toString();
+        return String.valueOf(getNumber(HOLENUMBER));
     }
     public void setHoleNumber(String number) {
         put(HOLENUMBER, Integer.valueOf(number));
     }
 
     public String getHolePar() {
-        return getNumber(HOLEPAR).toString();
+        return String.valueOf(getNumber(HOLEPAR));
     }
     public void setHolePar(String par) {
         put(HOLEPAR, Integer.valueOf(par));

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 

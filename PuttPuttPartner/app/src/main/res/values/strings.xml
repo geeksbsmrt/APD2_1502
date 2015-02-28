@@ -59,6 +59,8 @@
     <string name="clearScore">Clear Scores</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="guest">Guest</string>
+    <string name="maxPlayers">We currently only support 4 players per game.</string>
 
     <string-array name="states">
         <item>State</item>

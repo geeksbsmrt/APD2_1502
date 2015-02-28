@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 

@@ -1,10 +1,11 @@
-package com.geeksbsmrt.puttputtpartner;
+package com.geeksbsmrt.puttputtpartner.parse_items;
 
 import android.util.Log;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ public class GameItem extends ParseObject implements Serializable {
         put(PLAYERS, players);
     }
 
-    public void addPlayer(String player){
+    public void addPlayer(ParseUser player){
         List<String> players =  getPlayers();
         if (players == null){
             players = new ArrayList<String>();
-            players.add(player);
+            players.add(player.getObjectId());
         } else {
-            players.add(player);
+            players.add(player.getObjectId());
         }
         setPlayers(players);
     }

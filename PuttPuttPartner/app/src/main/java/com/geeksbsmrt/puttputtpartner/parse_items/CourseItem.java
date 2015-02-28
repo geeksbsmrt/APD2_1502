@@ -1,4 +1,4 @@
-package com.geeksbsmrt.puttputtpartner;
+package com.geeksbsmrt.puttputtpartner.parse_items;
 
 
 import android.util.Log;

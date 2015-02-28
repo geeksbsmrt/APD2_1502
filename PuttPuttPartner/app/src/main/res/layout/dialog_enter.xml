@@ -6,6 +6,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ED_input"/>
+        android:id="@+id/ED_input"
+        android:inputType=""/>
 
 </LinearLayout>

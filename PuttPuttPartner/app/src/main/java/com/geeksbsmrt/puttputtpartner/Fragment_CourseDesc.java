@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
+import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
@@ -94,7 +96,7 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
         game.setGameId(game.generateGameID());
         game.setCourse(course);
         ParseUser player = ParseUser.getCurrentUser();
-        game.addPlayer(player.getObjectId());
+        game.addPlayer(player);
         game.saveInBackground();
         return game.getGameId();
     }

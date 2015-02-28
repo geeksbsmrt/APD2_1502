@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -14,6 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
+import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
+import com.geeksbsmrt.puttputtpartner.parse_items.HoleItem;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
@@ -25,6 +29,7 @@ import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 
@@ -179,6 +184,14 @@ public class MainActivity extends Activity {
                         Log.d("PuttPutt Partner", "Anonymous login failed.");
                     } else {
                         Log.d("PuttPutt Partner", "Anonymous user logged in.");
+                        user.setUsername(String.format("Gen_%s", String.valueOf(new Random().nextInt(Integer.MAX_VALUE))));
+                        user.setPassword(String.valueOf(new Random().nextInt(Integer.MAX_VALUE)));
+                        user.put("name", getString(R.string.guest));
+                        try {
+                            user.signUp();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
             });
@@ -205,5 +218,11 @@ public class MainActivity extends Activity {
                 return false;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        super.onBackPressed();
     }
 }
