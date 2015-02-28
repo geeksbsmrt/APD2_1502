@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
 import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
 import com.geeksbsmrt.puttputtpartner.parse_items.HoleItem;
+import com.geeksbsmrt.puttputtpartner.parse_items.ScoreItem;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
@@ -59,6 +60,7 @@ public class MainActivity extends Activity {
         ParseObject.registerSubclass(CourseItem.class);
         ParseObject.registerSubclass(HoleItem.class);
         ParseObject.registerSubclass(GameItem.class);
+        ParseObject.registerSubclass(ScoreItem.class);
         Parse.initialize(this, res.getString(R.string.parse_app_id), res.getString(R.string.parse_client_key));
         ParseTwitterUtils.initialize(res.getString(R.string.twitterConsumerKey), res.getString(R.string.twitterConsumerSecret));
 

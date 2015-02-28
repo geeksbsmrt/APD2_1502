@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import java.text.ParseException;
+
 /**
  * Created by Adam on 2/27/2015.
  */
@@ -27,7 +29,7 @@ public class Dialogs extends DialogFragment {
 
     public interface onDialogFinished{
         void onDialogOK(String result, Dialogs dialog);
-        void onDialogOK(String result, int viewId, Dialogs dialog);
+        void onDialogOK(String result, int viewId, Dialogs dialog) throws ParseException;
         void onDialogCancel(Dialogs dialog);
     }
 
@@ -53,13 +55,21 @@ public class Dialogs extends DialogFragment {
         input = (EditText) view.findViewById(R.id.ED_input);
         switch (type){
             case SCORE:{
-                input.setHint(getString(R.string.enterScore));
+                if (getArguments().getString("text").equals("")) {
+                    input.setHint(getString(R.string.enterScore));
+                } else {
+                    input.setText(getArguments().getString("text"));
+                }
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 builder.setView(view).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!input.getText().toString().equals("")) {
-                            mListener.onDialogOK(input.getText().toString(), getArguments().getInt("viewId"), Dialogs.this);
+                            try {
+                                mListener.onDialogOK(input.getText().toString(), getArguments().getInt("viewId"), Dialogs.this);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

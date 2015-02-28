@@ -13,9 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
 import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 public class Fragment_JoinGame extends Fragment {
 
@@ -55,11 +59,23 @@ public class Fragment_JoinGame extends Fragment {
                 try {
                     GameItem game = gameQuery.getFirst();
                     Log.i("JG", game.getObjectId());
-                    //TODO: Remove toast message and complete Parse DB integration.
-                    //Static set text in toast message as it will not be present in final build.
-                    Toast.makeText(getActivity(), "Joining game with objectId: " + game.getObjectId() +".  Full functionality provided in next release.", Toast.LENGTH_LONG).show();
+                    ParseUser user = ParseUser.getCurrentUser();
+                    game.addPlayer(user);
+                    game.saveInBackground();
+
+                    Fragment_PlayGame pg = new Fragment_PlayGame();
+                    Bundle gameBundle = new Bundle();
+                    gameBundle.putString("game", game.getGameId());
+                    ParseQuery<CourseItem> courseQuery = CourseItem.getQuery();
+                    courseQuery.whereEqualTo("objectId", game.getCourse().getObjectId());
+                    CourseItem course = courseQuery.getFirst();
+                    gameBundle.putSerializable("course", course);
+                    pg.setArguments(gameBundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 } catch (ParseException e) {
                     Toast.makeText(getActivity(), getString(R.string.noGameFound) + " " + gameID.getText().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
             }

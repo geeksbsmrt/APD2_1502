@@ -27,7 +27,8 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        course = (CourseItem) getArguments().get("course");
+        setRetainInstance(true);
+
     }
 
     @Override
@@ -35,6 +36,8 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_fragment__course_desc, container, false);
+        course = (CourseItem) getArguments().get("course");
+
 
         MainActivity.actionBar.setTitle(course.getCourseName());
         setHasOptionsMenu(true);
@@ -72,7 +75,7 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
 
                 Fragment_PlayGame pg = new Fragment_PlayGame();
                 Bundle gameBundle = new Bundle();
-                gameBundle.putSerializable("game", createGame());
+                gameBundle.putString("game", createGame());
                 gameBundle.putSerializable("course", course);
                 pg.setArguments(gameBundle);
                 getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
