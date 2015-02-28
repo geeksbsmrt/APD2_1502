@@ -58,13 +58,13 @@ public class Fragment_CourseSearch extends Fragment implements AdapterView.OnIte
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            String query = input.getText().toString();
-                if (!query.equals("")){
+                String query = input.getText().toString();
+                if (!query.equals("")) {
                     Log.i("CS", query);
 
                     String zipRegex = "\\d{5}";
                     String cityStateRegex = ".*[,]? [A-Z][A-Za-z]";
-                    if (Pattern.matches(zipRegex, query)){
+                    if (Pattern.matches(zipRegex, query)) {
                         queryCourse(query);
                     } else if (Pattern.matches(cityStateRegex, query)) {
                         String state = query.substring(query.length() - 2).toUpperCase();
@@ -88,7 +88,7 @@ public class Fragment_CourseSearch extends Fragment implements AdapterView.OnIte
         return rootView;
     }
 
-    private void queryCourse(final String zip){
+    private void queryCourse(final String zip) {
 
         Log.i("CS", "In queryCourse ZIP");
 
@@ -120,11 +120,11 @@ public class Fragment_CourseSearch extends Fragment implements AdapterView.OnIte
                 return view;
             }
         };
-            courseList.setAdapter(courseAdapter);
-            courseList.setVisibility(View.VISIBLE);
+        courseList.setAdapter(courseAdapter);
+        courseList.setVisibility(View.VISIBLE);
     }
 
-    private void queryCourse(final String city, final String state){
+    private void queryCourse(final String city, final String state) {
         Log.i("CS", "In queryCourse City, ST");
 
         ParseQueryAdapter.QueryFactory<CourseItem> factory = new ParseQueryAdapter.QueryFactory<CourseItem>() {

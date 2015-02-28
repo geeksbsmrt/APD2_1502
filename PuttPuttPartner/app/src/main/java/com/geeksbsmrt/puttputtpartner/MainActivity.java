@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -38,10 +37,52 @@ public class MainActivity extends Activity {
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static ActionBar actionBar;
-    private Resources res;
-    public ParseUser currentUser;
-    private NfcAdapter mNfcAdapter;
     static FragmentManager fragMgr;
+    public ParseUser currentUser;
+    private Resources res;
+    private NfcAdapter mNfcAdapter;
+
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TEXT_PLAIN);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
+    }
+
+    public static CourseItem getCourse(String courseID) {
+        ParseQuery<CourseItem> query;
+        CourseItem course = null;
+        try {
+            query = CourseItem.getQuery();
+            query.whereEqualTo("objectId", courseID);
+
+            course = query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return course;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +96,7 @@ public class MainActivity extends Activity {
         fragMgr = getFragmentManager();
 
         if (!ParseCrashReporting.isCrashReportingEnabled()) {
-            //ParseCrashReporting.enable(this);
+            ParseCrashReporting.enable(this);
         }
         ParseObject.registerSubclass(CourseItem.class);
         ParseObject.registerSubclass(HoleItem.class);
@@ -91,38 +132,13 @@ public class MainActivity extends Activity {
             setupForegroundDispatch(this, mNfcAdapter);
         }
     }
+
     @Override
     protected void onPause() {
         if (!(mNfcAdapter == null)) {
             stopForegroundDispatch(this, mNfcAdapter);
         }
         super.onPause();
-    }
-
-    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
-
-        IntentFilter[] filters = new IntentFilter[1];
-        String[][] techList = new String[][]{};
-
-        // Notice that this is the same filter as in our manifest.
-        filters[0] = new IntentFilter();
-        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
-        try {
-            filters[0].addDataType(MIME_TEXT_PLAIN);
-        } catch (IntentFilter.MalformedMimeTypeException e) {
-            throw new RuntimeException("Check your mime type.");
-        }
-
-        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
-    }
-
-    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        adapter.disableForegroundDispatch(activity);
     }
 
     @Override
@@ -132,9 +148,9 @@ public class MainActivity extends Activity {
 
     private void handleIntent(Intent intent) {
         String action = intent.getAction();
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)){
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             String type = intent.getType();
-            if (MIME_TEXT_PLAIN.equals(type)){
+            if (MIME_TEXT_PLAIN.equals(type)) {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
                 try {
                     String courseID = new NdefReaderTask().execute(tag).get();
@@ -156,22 +172,6 @@ public class MainActivity extends Activity {
                 }
             }
         }
-    }
-
-    public static CourseItem getCourse(String courseID) {
-        ParseQuery<CourseItem> query;
-        CourseItem course = null;
-        try {
-            query = CourseItem.getQuery();
-            query.whereEqualTo("objectId", courseID);
-
-            course = query.getFirst();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-        return course;
     }
 
     @Override
@@ -219,11 +219,5 @@ public class MainActivity extends Activity {
                 return false;
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        super.onBackPressed();
     }
 }

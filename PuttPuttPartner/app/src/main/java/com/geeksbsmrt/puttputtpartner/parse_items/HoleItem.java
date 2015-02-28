@@ -20,9 +20,15 @@ public class HoleItem extends ParseObject implements Serializable {
     public static String HOLENUMBER = "Number";
     public static String HOLEPAR = "Par";
 
+    public static ParseQuery<HoleItem> getQuery() throws ParseException {
+        Log.i("HI", "getting query");
+        return ParseQuery.getQuery(HoleItem.class);
+    }
+
     public String getHoleNumber() {
         return String.valueOf(getNumber(HOLENUMBER));
     }
+
     public void setHoleNumber(String number) {
         put(HOLENUMBER, Integer.valueOf(number));
     }
@@ -30,12 +36,8 @@ public class HoleItem extends ParseObject implements Serializable {
     public String getHolePar() {
         return String.valueOf(getNumber(HOLEPAR));
     }
+
     public void setHolePar(String par) {
         put(HOLEPAR, Integer.valueOf(par));
-    }
-
-    public static ParseQuery<HoleItem> getQuery() throws ParseException {
-        Log.i("HI", "getting query");
-        return ParseQuery.getQuery(HoleItem.class);
     }
 }

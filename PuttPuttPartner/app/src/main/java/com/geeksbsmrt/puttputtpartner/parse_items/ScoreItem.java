@@ -20,23 +20,31 @@ public class ScoreItem extends ParseObject implements Serializable {
     public static String PLAYER = "Player";
     public static String GAME = "Game";
 
+    public static ParseQuery<ScoreItem> getQuery() throws ParseException {
+        Log.i("HI", "getting query");
+        return ParseQuery.getQuery(ScoreItem.class);
+    }
+
     public ParseObject getHole() {
         return getParseObject(HOLE);
     }
+
     public void setHole(HoleItem hole) {
         put(HOLE, hole);
     }
 
-    public Number getScore(){
+    public Number getScore() {
         return getNumber(SCORE);
     }
-    public void setScore(Number score){
+
+    public void setScore(Number score) {
         put(SCORE, score);
     }
 
     public ParseUser getPlayer() {
         return getParseUser(PLAYER);
     }
+
     public void setPlayer(ParseUser player) {
         put(PLAYER, player);
     }
@@ -44,12 +52,8 @@ public class ScoreItem extends ParseObject implements Serializable {
     public ParseObject getGame() {
         return getParseObject(GAME);
     }
+
     public void setGame(GameItem game) {
         put(GAME, game);
-    }
-
-    public static ParseQuery<ScoreItem> getQuery() throws ParseException {
-        Log.i("HI", "getting query");
-        return ParseQuery.getQuery(ScoreItem.class);
     }
 }

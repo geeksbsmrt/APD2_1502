@@ -22,7 +22,7 @@ public class Fragment_MainActivity extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         Button findCourse = (Button) rootView.findViewById(R.id.search);
         findCourse.setOnClickListener(this);
@@ -38,28 +38,29 @@ public class Fragment_MainActivity extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.search:{
+        switch (view.getId()) {
+            case R.id.search: {
                 Fragment_CourseSearch fcs = new Fragment_CourseSearch();
                 getFragmentManager().beginTransaction().replace(R.id.container, fcs).addToBackStack(null).commit();
                 break;
             }
-            case R.id.autoCheckIn:{
+            case R.id.autoCheckIn: {
                 Fragment_AutoCheckIn aci = new Fragment_AutoCheckIn();
                 getFragmentManager().beginTransaction().replace(R.id.container, aci).addToBackStack(null).commit();
                 break;
             }
-            case R.id.manualCheckIn:{
+            case R.id.manualCheckIn: {
                 Fragment_ManualCheckIn mci = new Fragment_ManualCheckIn();
                 getFragmentManager().beginTransaction().replace(R.id.container, mci).addToBackStack(null).commit();
                 break;
             }
-            case R.id.joinGame:{
+            case R.id.joinGame: {
                 Fragment_JoinGame jg = new Fragment_JoinGame();
                 getFragmentManager().beginTransaction().replace(R.id.container, jg).addToBackStack(null).commit();
                 break;
             }
-            default: break;
+            default:
+                break;
         }
     }
 }

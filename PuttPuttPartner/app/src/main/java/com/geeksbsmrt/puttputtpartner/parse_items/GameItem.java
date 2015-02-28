@@ -23,23 +23,30 @@ public class GameItem extends ParseObject implements Serializable {
     public static String PLAYERS = "Players";
     public static String COURSE = "Course";
 
+    public static ParseQuery<GameItem> getQuery() {
+        Log.i("GI", "getting query");
+        return ParseQuery.getQuery(GameItem.class);
+    }
+
     public String getGameId() {
         return getString(GAMEID);
     }
+
     public void setGameId(String gameID) {
-       put(GAMEID, gameID);
+        put(GAMEID, gameID);
     }
 
     public List<String> getPlayers() {
         return getList(PLAYERS);
     }
+
     public void setPlayers(List players) {
         put(PLAYERS, players);
     }
 
-    public void addPlayer(ParseUser player){
-        List<String> players =  getPlayers();
-        if (players == null){
+    public void addPlayer(ParseUser player) {
+        List<String> players = getPlayers();
+        if (players == null) {
             players = new ArrayList<String>();
             players.add(player.getObjectId());
         } else {
@@ -51,16 +58,12 @@ public class GameItem extends ParseObject implements Serializable {
     public ParseObject getCourse() {
         return getParseObject(COURSE);
     }
+
     public void setCourse(CourseItem course) {
-       put(COURSE, course);
+        put(COURSE, course);
     }
 
-    public String generateGameID(){
+    public String generateGameID() {
         return String.valueOf(new Random().nextInt(Integer.MAX_VALUE));
-    }
-
-    public static ParseQuery<GameItem> getQuery(){
-        Log.i("GI", "getting query");
-        return ParseQuery.getQuery(GameItem.class);
     }
 }

@@ -39,12 +39,14 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
         }
         return null;
     }
+
     private String readText(NdefRecord record) throws UnsupportedEncodingException {
         byte[] payload = record.getPayload();
         String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
         int languageCodeLength = payload[0] & 0063;
         return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
     }
+
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {

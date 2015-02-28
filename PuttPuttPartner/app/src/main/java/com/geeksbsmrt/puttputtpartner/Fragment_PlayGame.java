@@ -3,6 +3,7 @@ package com.geeksbsmrt.puttputtpartner;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -57,6 +58,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -66,9 +68,8 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
         gameId = getArguments().getString("game");
         mContext = getActivity().getApplicationContext();
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        densityDPI = (int)(metrics.density * 160f);
+        densityDPI = (int) (metrics.density * 160f);
         rootView = inflater.inflate(R.layout.fragment_play_game, container, false);
-
 
         setHasOptionsMenu(true);
         MainActivity.actionBar.setHomeButtonEnabled(true);
@@ -128,37 +129,30 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
             }
 
             players = game.getPlayers();
-            for (String player : players){
+            for (String player : players) {
                 ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
                 userQuery.whereEqualTo("objectId", player);
                 ParseUser user = userQuery.getFirst();
                 addPlayer(user);
             }
-
+            getScores();
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
-
-        try {
-            getScores();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         return rootView;
     }
 
-    private void addPlayer(ParseUser user){
+    private void addPlayer(ParseUser user) {
         TableRow playerNameRow = new TableRow(mContext);
         TextView playerNameView = new TextView(mContext);
         TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int px5 = getPx(5);
-        params.setMargins(px5,px5,px5,px5);
+        params.setMargins(px5, px5, px5, px5);
         playerNameView.setLayoutParams(params);
 
-        if (user.containsKey("name")){
+        if (user.containsKey("name")) {
             Log.i("PG", user.getString("name"));
             playerNameView.setText(user.getString("name"));
         } else {
@@ -180,7 +174,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
         playerScoreRow.setShowDividers(TableRow.SHOW_DIVIDER_BEGINNING | TableRow.SHOW_DIVIDER_MIDDLE | TableRow.SHOW_DIVIDER_END);
         playerScoreRow.setLayoutParams(psrView);
 
-        for (String hole : holes){
+        for (String hole : holes) {
             final TextView playerScoreText = new TextView(mContext);
             playerScoreText.setMinWidth(getPx(20));
             playerScoreText.setLayoutParams(psrView);
@@ -206,20 +200,19 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     }
 
     private void getScores() throws ParseException {
-
         ParseQuery<ScoreItem> scoreQuery = ScoreItem.getQuery();
         scoreQuery.whereEqualTo(ScoreItem.GAME, game);
         scoreQuery.findInBackground(new FindCallback<ScoreItem>() {
             @Override
             public void done(List<ScoreItem> scoreItems, com.parse.ParseException e) {
-                for (ScoreItem scoreItem : scoreItems){
+                for (ScoreItem scoreItem : scoreItems) {
                     TableRow playerRow = (TableRow) scoreTable.findViewWithTag(scoreItem.getPlayer().getObjectId());
                     TextView playerTotalView = (TextView) totalTable.findViewWithTag(scoreItem.getPlayer().getObjectId());
                     try {
                         ParseQuery<HoleItem> holeQuery = HoleItem.getQuery();
                         holeQuery.whereEqualTo("objectId", scoreItem.getHole().getObjectId());
                         HoleItem holeItem = holeQuery.getFirst();
-                        TextView holeText = (TextView) playerRow.getChildAt(Integer.parseInt(holeItem.getHoleNumber())-1);
+                        TextView holeText = (TextView) playerRow.getChildAt(Integer.parseInt(holeItem.getHoleNumber()) - 1);
                         holeText.setText(String.valueOf(scoreItem.getScore()));
                         Integer playerTotal = (Integer) scoreItem.getScore();
                         if (!playerTotalView.getText().toString().equals("")) {
@@ -250,14 +243,14 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
         }
     }
 
-    private int getPx(int dpi){
-        return dpi * (densityDPI/160);
+    private int getPx(int dpi) {
+        return dpi * (densityDPI / 160);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.PG_addPlayer:{
+        switch (view.getId()) {
+            case R.id.PG_addPlayer: {
                 if (players.size() < 4) {
                     Dialogs dialog = Dialogs.newInstance(Dialogs.DialogType.PLAYER);
                     Bundle args = new Bundle();
@@ -270,11 +263,11 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                 }
                 break;
             }
-            case R.id.PG_clearScore:{
+            case R.id.PG_clearScore: {
 
                 break;
             }
-            default:{
+            default: {
                 ParseUser user = null;
                 TableRow scoreRow = (TableRow) view.getParent();
                 String player = String.valueOf(scoreRow.getTag());
@@ -292,7 +285,17 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                     Bundle args = new Bundle();
                     args.putInt(Dialogs.VIEW_ID, view.getId());
                     TextView textView = (TextView) scoreTable.findViewById(view.getId());
-                    args.putString(Dialogs.TEXT,textView.getText().toString());
+                    if (!textView.getText().toString().equals("")) {
+                        args.putString(Dialogs.TEXT, textView.getText().toString());
+                        TextView playerTotalView = (TextView) totalTable.findViewWithTag(user.getObjectId());
+                        if (!playerTotalView.getText().toString().equals("")) {
+                            Integer playerTotal = Integer.parseInt(playerTotalView.getText().toString());
+                            playerTotal -= Integer.parseInt(textView.getText().toString());
+                            playerTotalView.setText(String.valueOf(playerTotal));
+                        }
+                    } else {
+                        args.putString(Dialogs.TEXT, "");
+                    }
                     dialog.setArguments(args);
                     dialog.setTargetFragment(this, 0);
                     dialog.show(getFragmentManager(), "DF");
@@ -304,7 +307,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
 
     @Override
     public void onDialogOK(String result, Dialogs dialog) {
-        try{
+        try {
             Log.i("Current User: ", ParseUser.getCurrentUser().getObjectId());
             String token = ParseUser.getCurrentUser().getSessionToken();
             ParseUser newUser = new ParseUser();
@@ -325,7 +328,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onDialogOK(String result, int viewId, Dialogs dialog){
+    public void onDialogOK(String result, int viewId, Dialogs dialog) {
         TextView text = (TextView) scoreTable.findViewById(viewId);
         text.setText(result);
         TableRow playerRow = (TableRow) text.getParent();
@@ -361,7 +364,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                 scoreQuery.whereEqualTo(ScoreItem.PLAYER, user);
                 ScoreItem score;
                 Log.i("Score Count", String.valueOf(scoreQuery.count()));
-                if (scoreQuery.count() > 0){
+                if (scoreQuery.count() > 0) {
                     score = scoreQuery.getFirst();
                     score.setScore(Integer.parseInt(result));
                 } else {
@@ -384,5 +387,21 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     @Override
     public void onDialogCancel(Dialogs dialog) {
         dialog.dismiss();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        for (String player : players) {
+            TextView playerText = (TextView) totalTable.findViewWithTag(player);
+            playerText.setText("");
+        }
+
+        try {
+            getScores();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

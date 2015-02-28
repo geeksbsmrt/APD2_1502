@@ -29,11 +29,11 @@ public class Fragment_AutoCheckIn extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-        if (nfcAdapter == null){
+        if (nfcAdapter == null) {
             Toast.makeText(getActivity(), getString(R.string.noNFC), Toast.LENGTH_LONG).show();
         }
 
-        if (!nfcAdapter.isEnabled()){
+        if (!nfcAdapter.isEnabled()) {
             Toast.makeText(getActivity(), getString(R.string.nfcDisabled), Toast.LENGTH_LONG).show();
             startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
         }
@@ -66,9 +66,9 @@ public class Fragment_AutoCheckIn extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("ACI", "in results");
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null){
+        if (result != null) {
             String contents = result.getContents();
-            if (contents != null){
+            if (contents != null) {
                 Log.i("ACI", contents);
                 CourseItem course = MainActivity.getCourse(contents);
                 if (!(course == null)) {

@@ -20,41 +20,38 @@ public class Dialogs extends DialogFragment {
 
     public static final String VIEW_ID = "viewId";
     public static final String TEXT = "text";
-
-    public enum DialogType {
-        SCORE,
-        PLAYER,
-        PAR
-    }
+    public static final String OBJECTID = "objectId";
     public static DialogType type;
-
     EditText input;
-
-    public Dialogs(){}
-
-    public interface onDialogFinished{
-        void onDialogOK(String result, Dialogs dialog);
-        void onDialogOK(String result, int viewId, Dialogs dialog) throws ParseException;
-        void onDialogCancel(Dialogs dialog);
-    }
-    public interface createDialogFinished{
-        void onDialogOK(String result, int viewId, Dialogs dialog);
-        void onDialogCancel(Dialogs dialog);
-    }
-
     onDialogFinished mListener;
     createDialogFinished cListener;
+
+    public Dialogs() {
+    }
+
+    public static Dialogs newInstance(DialogType dType) {
+        type = dType;
+        return new Dialogs();
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        try {
-            mListener = (onDialogFinished) getTargetFragment();
-            cListener = (createDialogFinished) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement onDialogFinished");
+        if (getTargetFragment().getClass() == Fragment_PlayGame.class) {
+            try {
+                mListener = (onDialogFinished) getTargetFragment();
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement onDialogFinished");
+            }
+        } else {
+            try {
+                cListener = (createDialogFinished) getTargetFragment();
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement createDialogFinished");
+            }
         }
     }
 
@@ -64,8 +61,8 @@ public class Dialogs extends DialogFragment {
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_enter, null);
         input = (EditText) view.findViewById(R.id.ED_input);
-        switch (type){
-            case SCORE:{
+        switch (type) {
+            case SCORE: {
                 if (getArguments().getString(TEXT).equals("")) {
                     input.setHint(getString(R.string.enterScore));
                 } else {
@@ -91,7 +88,7 @@ public class Dialogs extends DialogFragment {
                 });
                 break;
             }
-            case PLAYER:{
+            case PLAYER: {
                 input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
                 input.setHint(getString(R.string.playerName));
                 builder.setView(view).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -109,7 +106,7 @@ public class Dialogs extends DialogFragment {
                 });
                 break;
             }
-            case PAR:{
+            case PAR: {
                 if (getArguments().getString(TEXT).equals("")) {
                     input.setHint(getString(R.string.par));
                 } else {
@@ -120,7 +117,11 @@ public class Dialogs extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!input.getText().toString().equals("")) {
-                            cListener.onDialogOK(input.getText().toString(), getArguments().getInt(VIEW_ID), Dialogs.this);
+                            if (getArguments().getString(OBJECTID) != null) {
+                                cListener.onDialogOK(input.getText().toString(), getArguments().getInt(VIEW_ID), Dialogs.this, getArguments().getString(OBJECTID));
+                            } else {
+                                cListener.onDialogOK(input.getText().toString(), getArguments().getInt(VIEW_ID), Dialogs.this, null);
+                            }
                         }
                     }
                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -130,12 +131,29 @@ public class Dialogs extends DialogFragment {
                     }
                 });
             }
-            default:break;
+            default:
+                break;
         }
         return builder.create();
     }
-    public static Dialogs newInstance(DialogType dType){
-        type = dType;
-        return new Dialogs();
+
+    public enum DialogType {
+        SCORE,
+        PLAYER,
+        PAR
+    }
+
+    public interface onDialogFinished {
+        void onDialogOK(String result, Dialogs dialog);
+
+        void onDialogOK(String result, int viewId, Dialogs dialog) throws ParseException;
+
+        void onDialogCancel(Dialogs dialog);
+    }
+
+    public interface createDialogFinished {
+        void onDialogOK(String result, int viewId, Dialogs dialog, String objectId);
+
+        void onDialogCancel(Dialogs dialog);
     }
 }

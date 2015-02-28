@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -62,8 +61,10 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
         ListView nearList = (ListView) rootView.findViewById(R.id.MCI_NearCourses);
         noFavs = (TextView) rootView.findViewById(R.id.MCI_noFavs);
 
-        if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+        if (user.getList("Favorites") != null) {
             queryFavs();
+        } else {
+            noFavs.setVisibility(View.VISIBLE);
         }
 
         return rootView;
@@ -79,12 +80,7 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
                     query = CourseItem.getQuery();
                     query.whereContainedIn("objectId", user.getList("Favorites"));
                     Log.i("MCI", String.valueOf(query.count()));
-                    if (query.count() > 0){
-                        favList.setVisibility(View.VISIBLE);
-                    } else {
-                        query = null;
-                        noFavs.setVisibility(View.VISIBLE);
-                    }
+                    favList.setVisibility(View.VISIBLE);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 } catch (java.text.ParseException e) {
@@ -107,9 +103,7 @@ public class Fragment_ManualCheckIn extends Fragment implements AdapterView.OnIt
                 return view;
             }
         };
-        if (courseAdapter.getCount() > 0){
-            favList.setAdapter(courseAdapter);
-        }
+        favList.setAdapter(courseAdapter);
     }
 
     @Override

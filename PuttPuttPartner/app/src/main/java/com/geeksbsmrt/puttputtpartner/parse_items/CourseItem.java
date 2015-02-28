@@ -27,16 +27,23 @@ public class CourseItem extends ParseObject implements Serializable {
     public static String COURSEZIP = "Zip";
     public static String COURSEPAR = "TotalPar";
 
+    public static ParseQuery<CourseItem> getQuery() throws ParseException {
+        Log.i("CI", "getting query");
+        return ParseQuery.getQuery(CourseItem.class);
+    }
+
     public String getCourseName() {
         return getString(COURSENAME);
     }
+
     public void setCourseName(String name) {
-       put(COURSENAME, name);
+        put(COURSENAME, name);
     }
 
     public String getCourseAddress() {
         return getString(COURSEADDRESS);
     }
+
     public void setCourseAddress(String address) {
         put(COURSEADDRESS, address);
     }
@@ -44,6 +51,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public String getCourseCity() {
         return getString(COURSECITY);
     }
+
     public void setCourseCity(String city) {
         put(COURSECITY, city);
     }
@@ -51,6 +59,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public String getCourseState() {
         return getString(COURSESTATE);
     }
+
     public void setCourseState(String state) {
         put(COURSESTATE, state);
     }
@@ -58,6 +67,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public String getCourseZip() {
         return getString(COURSEZIP);
     }
+
     public void setCourseZip(String zip) {
         put(COURSEZIP, zip);
     }
@@ -65,6 +75,7 @@ public class CourseItem extends ParseObject implements Serializable {
     public ParseGeoPoint getCourseLocation() {
         return getParseGeoPoint(COURSELOCATION);
     }
+
     public void setCourseLocation(ParseGeoPoint location) {
         put(COURSELOCATION, location);
     }
@@ -72,19 +83,16 @@ public class CourseItem extends ParseObject implements Serializable {
     public List<String> getCourseHoles() {
         return getList(COURSEHOLES);
     }
+
     public void setCourseHoles(List<String> holes) {
         put(COURSEHOLES, holes);
     }
 
-    public  String getCoursePar() {
+    public String getCoursePar() {
         return getString(COURSEPAR);
     }
+
     public void setCoursePar(String coursePar) {
         put(COURSEPAR, coursePar);
-    }
-
-    public static ParseQuery<CourseItem> getQuery() throws ParseException{
-        Log.i("CI", "getting query");
-        return ParseQuery.getQuery(CourseItem.class);
     }
 }

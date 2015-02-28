@@ -16,7 +16,7 @@ import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
 
-public class Fragment_Options extends Fragment implements View.OnClickListener{
+public class Fragment_Options extends Fragment implements View.OnClickListener {
 
     public Fragment_Options() {
         // Required empty public constructor
@@ -54,14 +54,14 @@ public class Fragment_Options extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.OPT_ACT:{
+        switch (view.getId()) {
+            case R.id.OPT_ACT: {
                 ParseLoginBuilder builder = new ParseLoginBuilder(getActivity());
                 startActivityForResult(builder.build(), 0);
                 getFragmentManager().popBackStack();
                 break;
             }
-            case R.id.OPT_LOGOUT:{
+            case R.id.OPT_LOGOUT: {
                 Log.i("OPT", "Logging out");
                 ParseUser.logOut();
                 ParseAnonymousUtils.logIn(new LogInCallback() {
@@ -77,7 +77,8 @@ public class Fragment_Options extends Fragment implements View.OnClickListener{
                 getFragmentManager().popBackStack();
                 break;
             }
-            default:break;
+            default:
+                break;
         }
     }
 

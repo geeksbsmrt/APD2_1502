@@ -58,8 +58,11 @@ public class Fragment_JoinGame extends Fragment {
                     GameItem game = gameQuery.getFirst();
                     Log.i("JG", game.getObjectId());
                     ParseUser user = ParseUser.getCurrentUser();
-                    game.addPlayer(user);
-                    game.saveInBackground();
+
+                    if (!game.getPlayers().contains(user.getObjectId())) {
+                        game.addPlayer(user);
+                        game.saveInBackground();
+                    }
 
                     Fragment_PlayGame pg = new Fragment_PlayGame();
                     Bundle gameBundle = new Bundle();

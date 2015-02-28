@@ -25,7 +25,6 @@ import java.util.List;
 
 public class Fragment_AddCourse extends Fragment implements View.OnClickListener, Fragment_CreateScoreCard.CreateScoreCardCallback {
 
-    private LinearLayout playButtons;
     CourseItem course;
     Spinner stateSpinner;
     EditText courseName;
@@ -33,6 +32,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
     EditText courseCity;
     EditText courseZip;
     EditText numHoles;
+    private LinearLayout playButtons;
 
     public Fragment_AddCourse() {
         // Required empty public constructor
@@ -42,6 +42,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         course = new CourseItem();
+        course.saveInBackground();
     }
 
     @Override
@@ -88,10 +89,10 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
             case R.id.AC_CreateScorecard: {
 
                 if (courseName.getText().toString().equals("") ||
-                    courseAddress.getText().toString().equals("") ||
-                    courseCity.getText().toString().equals("") ||
-                    courseZip.getText().toString().equals("") ||
-                    stateSpinner.getSelectedItem().toString().equals("State")){
+                        courseAddress.getText().toString().equals("") ||
+                        courseCity.getText().toString().equals("") ||
+                        courseZip.getText().toString().equals("") ||
+                        stateSpinner.getSelectedItem().toString().equals("State")) {
                     Toast.makeText(getActivity(), getString(R.string.allFields), Toast.LENGTH_LONG).show();
                 } else {
                     course.setCourseName(courseName.getText().toString());
@@ -104,7 +105,9 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
                         Fragment_CreateScoreCard fcs = new Fragment_CreateScoreCard();
                         Bundle args = new Bundle();
                         args.putString(Fragment_CreateScoreCard.NUM_HOLES, numHoles.getText().toString());
+                        args.putSerializable("course", course);
                         fcs.setArguments(args);
+                        fcs.setTargetFragment(this, 0);
                         getFragmentManager().beginTransaction().replace(R.id.container, fcs, "fcs").addToBackStack(null).commit();
                     }
                 }
@@ -163,7 +166,7 @@ public class Fragment_AddCourse extends Fragment implements View.OnClickListener
         });
     }
 
-    private String createGame(){
+    private String createGame() {
         GameItem game = new GameItem();
         game.setGameId(game.generateGameID());
         game.setCourse(course);

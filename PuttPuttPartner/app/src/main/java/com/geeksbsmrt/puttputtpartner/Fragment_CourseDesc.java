@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.geeksbsmrt.puttputtpartner.parse_items.CourseItem;
 import com.geeksbsmrt.puttputtpartner.parse_items.GameItem;
-import com.parse.ParseAnonymousUtils;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
@@ -53,9 +53,9 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
         favButton.setOnClickListener(this);
         playButton.setOnClickListener(this);
 
-        if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-            favButton.setVisibility(View.GONE);
-        }
+//        if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+//            favButton.setVisibility(View.GONE);
+//        }
 
         address.setText(course.getCourseAddress());
         city.setText(course.getCourseCity() + ", " + course.getCourseState());
@@ -67,21 +67,12 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.CD_AddFavAndPlay:{
+        switch (view.getId()) {
+            case R.id.CD_AddFavAndPlay: {
                 ParseUser user = ParseUser.getCurrentUser();
                 user.addUnique("Favorites", course.getObjectId());
                 user.saveInBackground();
 
-                Fragment_PlayGame pg = new Fragment_PlayGame();
-                Bundle gameBundle = new Bundle();
-                gameBundle.putString("game", createGame());
-                gameBundle.putSerializable("course", course);
-                pg.setArguments(gameBundle);
-                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
-                break;
-            }
-            case R.id.CD_Play:{
                 Fragment_PlayGame pg = new Fragment_PlayGame();
                 Bundle gameBundle = new Bundle();
                 gameBundle.putSerializable("game", createGame());
@@ -90,17 +81,31 @@ public class Fragment_CourseDesc extends Fragment implements View.OnClickListene
                 getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
                 break;
             }
-            default:break;
+            case R.id.CD_Play: {
+                Fragment_PlayGame pg = new Fragment_PlayGame();
+                Bundle gameBundle = new Bundle();
+                gameBundle.putSerializable("game", createGame());
+                gameBundle.putSerializable("course", course);
+                pg.setArguments(gameBundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, pg).addToBackStack(null).commit();
+                break;
+            }
+            default:
+                break;
         }
     }
 
-    private String createGame(){
+    private String createGame() {
         GameItem game = new GameItem();
-        game.setGameId(game.generateGameID());
-        game.setCourse(course);
-        ParseUser player = ParseUser.getCurrentUser();
-        game.addPlayer(player);
-        game.saveInBackground();
+        try {
+            game.setGameId(game.generateGameID());
+            game.setCourse(course);
+            ParseUser player = ParseUser.getCurrentUser();
+            game.addPlayer(player);
+            game.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return game.getGameId();
     }
 
