@@ -109,46 +109,6 @@
                     android:gravity="end"
                     />
             </TableRow>
-            <!--<TableRow-->
-                <!--android:divider="?android:dividerVertical"-->
-                <!--android:showDividers="middle|beginning"-->
-                <!-->-->
-                <!--<TextView-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="0"-->
-                    <!--/>-->
-            <!--</TableRow>-->
-            <!--<TableRow-->
-                <!--android:divider="?android:dividerVertical"-->
-                <!--android:showDividers="middle|beginning"-->
-                <!-->-->
-                <!--<TextView-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="0"-->
-                    <!--/>-->
-            <!--</TableRow>-->
-            <!--<TableRow-->
-                <!--android:divider="?android:dividerVertical"-->
-                <!--android:showDividers="middle|beginning"-->
-                <!-->-->
-                <!--<TextView-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="0"-->
-                    <!--/>-->
-            <!--</TableRow>-->
-            <!--<TableRow-->
-                <!--android:divider="?android:dividerVertical"-->
-                <!--android:showDividers="middle|beginning"-->
-                <!-->-->
-                <!--<TextView-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="0"-->
-                    <!--/>-->
-            <!--</TableRow>-->
         </TableLayout>
     </LinearLayout>
     <LinearLayout

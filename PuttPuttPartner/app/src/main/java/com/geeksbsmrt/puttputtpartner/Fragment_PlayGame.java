@@ -140,13 +140,18 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
                 addPlayer(user);
             }
 
-            getScores();
-
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
+
+        try {
+            getScores();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return rootView;
     }
 
@@ -206,6 +211,7 @@ public class Fragment_PlayGame extends Fragment implements View.OnClickListener,
     }
 
     private void getScores() throws ParseException {
+
         ParseQuery<ScoreItem> scoreQuery = ScoreItem.getQuery();
         scoreQuery.whereEqualTo(ScoreItem.GAME, game);
         scoreQuery.findInBackground(new FindCallback<ScoreItem>() {
